@@ -1,8 +1,8 @@
 .product-card {
-  background: white;
+  background: var(--surface);
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -14,7 +14,7 @@
 
 .product-image {
   height: 200px;
-  background: #f1f5f9;
+  background: var(--background);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,35 +34,40 @@
 .product-name {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text);
   margin-bottom: 0.5rem;
 }
 
 .product-price {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #3b82f6;
+  color: var(--primary);
   margin-bottom: 1rem;
 }
 
 .add-to-cart-btn {
   width: 100%;
   padding: 12px;
-  background: #3b82f6;
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   height: 50px;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+  background: var(--primary-hover);
 }
 
 .quantity-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--quantity-bg);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 5px;
 }
@@ -70,9 +75,20 @@
 .quantity-btn {
   width: 36px;
   height: 36px;
-  background: white;
-  border: 1px solid #d1d5db;
+  background: var(--quantity-surface);
+  border: 1px solid var(--border);
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
+  color: var(--text);
+  transition: background-color 0.3s;
+}
+
+.quantity-btn:hover {
+  background: var(--background);
+}
+
+.quantity-display {
+  font-weight: 600;
+  color: var(--text);
 }

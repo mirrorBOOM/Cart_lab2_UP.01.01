@@ -1,12 +1,21 @@
 import React from 'react';
-import ProductCard from './ProductCard';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { CartProvider } from './contexts/CartContext';
+import { AuthProvider } from './contexts/AuthContext';
+import Header from './components/Header';
+import ProductList from './components/ProductList';
+import Cart from './components/Cart';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
   const products = [
     {
       id: 1,
-      name: "The North Face Thermoball ",
+      name: "The North Face Thermoball",
       price: 7699,
       image: "https://superstep.ru/upload/resize_cache/iblock/55e/rrw6mkvskx5ttwjn304dzib7hizn7j14/2160_2160_1/NF0A5LWFR0G1.webp"
     },
@@ -28,23 +37,37 @@ function App() {
       price: 27999,
       image: "https://superstep.ru/upload/resize_cache/iblock/a6d/wr4lzbaohfeweqcej0v24pft4cka2g1p/2160_2160_1/NBU1906RCO.webp"
     },
-  ]
+    {
+      id: 5,
+      name: "Nike Air Force 1",
+      price: 12999,
+      image: "https://superstep.ru/upload/resize_cache/iblock/3e5/59iwj95uf987xk01cc75d008xpvn8b2j/2160_2160_1/NKDD8959100.webp"
+    }
+  ];
 
   return (
-    <div className="App">
-      <main className="container">
-        <div className="products-grid">
-          {products.map(product => (
-            <ProductCard
-              key={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.image}
-            />
-          ))}
-        </div>
-      </main>
-    </div>
+    <ThemeProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <div className="App">
+              <Header />
+              <main className="container">
+                <Routes>
+                  <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/catalog" element={<ProductList products={products} />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </Routes>
+              </main>
+            </div>
+          </Router>
+        </CartProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
