@@ -1,17 +1,18 @@
+// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
-import ProductList from './components/ProductList';
-import Cart from './components/Cart';
-import Login from './components/Login';
-import Register from './components/Register';
-import Dashboard from './components/Dashboard';
+import HomePage from './pages/Catalog'; // Каталог товаров
+import CartPage from './pages/Cart';   // Корзина
+import LoginPage from './pages/Login'; // Вход
+import DashboardPage from './pages/Dashboard'; // Главная
 import './App.css';
 
 function App() {
+  // Твой массив товаров
   const products = [
     {
       id: 1,
@@ -54,13 +55,15 @@ function App() {
               <Header />
               <main className="container">
                 <Routes>
+                  {/* Главная страница "/" ведет на Dashboard */}
                   <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/catalog" element={<ProductList products={products} />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  {/* Каталог доступен всем, передавать товары больше не нужно, т.к. они прямо в HomePage */}
+                  <Route path="/catalog" element={<HomePage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  {/* Для /register не делаем Route, так как у вас его нет в требовании и в App.jsx его не было */}
+                  {/* Все остальные маршруты ведут на 404 */}
                 </Routes>
               </main>
             </div>

@@ -1,54 +1,39 @@
-import React, { useState } from 'react';
+// src/components/ProductCard.jsx
+import React from 'react';
 import { useCart } from '../contexts/CartContext';
-import './ProductCard.css';
+// import { useNavigate } from 'react-router-dom'; // Закомментируем
 
-const ProductCard = ({ product }) => {
-  const [quantity, setQuantity] = useState(0);
-  const { addToCart } = useCart();
+function ProductCard({ product }) {
+  const { cart, addItem, incrementQuantity, decrementQuantity } = useCart();
+  // const navigate = useNavigate();
+
+  const itemInCart = cart.find(item => item.id === product.id);
 
   const handleAddToCart = () => {
-    setQuantity(quantity + 1);
-    addToCart(product);
-  };
-
-  const handleDecrease = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const handleIncrease = () => {
-    setQuantity(quantity + 1);
-    addToCart(product);
+    addItem(product);
+    // Программный переход можно добавить здесь, если это нужно после добавления
+    // if (window.confirm(`${product.name} добавлен в корзину! Перейти в корзину?`)) {
+    //   navigate('/cart');
+    // }
   };
 
   return (
     <div className="product-card">
-      <div className="product-image">
-        <img src={product.image} alt={product.name} />
-      </div>
-      <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
-        <p className="product-price">{product.price.toLocaleString()} руб.</p>
-        
-        {quantity === 0 ? (
-          <button className="add-to-cart-btn" onClick={handleAddToCart}>
-            Добавить в корзину
-          </button>
-        ) : (
-          <div className="quantity-controls">
-            <button className="quantity-btn" onClick={handleDecrease}>
-              -
-            </button>
-            <span className="quantity-display">{quantity}</span>
-            <button className="quantity-btn" onClick={handleIncrease}>
-              +
-            </button>
-          </div>
-        )}
-      </div>
+      {product.image && <img src={product.image} alt={product.name} />} {/* Рендерим img только если есть image */}
+      <h3>{product.name}</h3>
+      <p className="price">{product.price} руб.</p>
+      {itemInCart ? (
+        <div className="quantity-controls">
+          <button onClick={() => decrementQuantity(product.id)}>-</button>
+          <span>{itemInCart.quantity}</span>
+          <button onClick={() => incrementQuantity(product.id)}>+</button>
+        </div>
+      ) : null}
+      <button onClick={handleAddToCart} className="add-to-cart-button">
+        {itemInCart ? 'Добавить ещё' : 'В корзину'}
+      </button>
     </div>
   );
-};
+}
 
 export default ProductCard;

@@ -1,63 +1,482 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* App.css - Небольшие изменения */
 
+/* --- CSS-переменные для темы --- */
+/* Light Theme (твои светлые скрины) */
 :root {
-
-  --background: #f8fafc;
-  --surface: #ffffff;
-  --text: #1e293b;
-  --primary: #3b82f6; 
-  --primary-hover: #2563eb;
-  --border: #e2e8f0;
-  --secondary: #64748b;
-  --error: #ef4444;
-  --error-hover: #dc2626;
-  --success: #10b981;
-  --quantity-bg: #f8fafc;
-  --quantity-surface: #ffffff;
+  --background-color: #f0f2f5; /* Светло-серый фон */
+  --text-color: #333;
+  --card-background: #fff;
+  --button-primary-background: #007bff; /* Синяя кнопка */
+  --button-primary-hover-background: #0056b3;
+  --button-danger-background: #dc3545; /* Красная кнопка */
+  --button-danger-hover-background: #c82333;
+  --button-text-color: #fff;
+  --border-color: #ddd;
+  --header-background: #fff; /* Белый хедер */
+  --header-text-color: #333;
+  --active-link-color: #007bff; /* Активная ссылка синяя */
+  --input-background: #fff;
+  --input-border: #ccc;
+  --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] {
-  --background: #0f172a;
-  --surface: #1e293b;
-  --text: #f1f5f9;
-  --primary: #f59e0b; 
-  --primary-hover: #d97706;
-  --border: #334155;
-  --secondary: #94a3b8;
-  --error: #f87171;
-  --error-hover: #ef4444;
-  --success: #34d399;
-  --quantity-bg: #1e293b;
-  --quantity-surface: #334155;
+/* Dark Theme (твои темные скрины) */
+.dark-theme {
+  --background-color: #262a34; /* Темно-синий фон */
+  --text-color: #f1f1f1;
+  --card-background: #3a3f4e; /* Темные карточки */
+  --button-primary-background: #6a0dad; /* Фиолетовая кнопка */
+  --button-primary-hover-background: #4a0873;
+  --button-danger-background: #dc3545;
+  --button-danger-hover-background: #c82333;
+  --button-text-color: #fff;
+  --border-color: #555;
+  --header-background: #3a3f4e; /* Темный хедер */
+  --header-text-color: #f1f1f1;
+  --active-link-color: #a042ff; /* Активная ссылка фиолетовая */
+  --input-background: #2c3038;
+  --input-border: #555;
+  --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
+/* --- Общие стили --- */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background-color: var(--background);
-  color: var(--text);
-  line-height: 1.6;
-  transition: background-color 0.3s, color 0.3s;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App {
+#root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background: var(--background);
-  color: var(--text);
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px;
+  flex-grow: 1; /* Для растягивания контента */
 }
 
-.products-grid {
+/* --- Header & Navigation --- */
+.header {
+  background-color: var(--header-background);
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  color: var(--header-text-color);
+}
+
+.header .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--header-text-color);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: var(--header-text-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
+  padding-bottom: 3px;
+}
+
+.nav-link:hover {
+  color: var(--active-link-color);
+}
+
+.nav-link.active {
+  color: var(--active-link-color);
+  border-bottom: 2px solid var(--active-link-color);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-switcher button,
+.auth-button {
+  background-color: var(--button-primary-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.9em;
+}
+
+.theme-switcher button:hover,
+.auth-button:hover {
+  background-color: var(--button-primary-hover-background);
+}
+
+.logout-button {
+  background-color: var(--button-danger-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.9em;
+}
+.logout-button:hover {
+  background-color: var(--button-danger-hover-background);
+}
+
+.user-info {
+  font-weight: bold;
+  color: var(--header-text-color);
+}
+
+/* --- Страницы --- */
+.page-title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  color: var(--text-color);
+}
+
+/* --- Авторизация (Login Page) --- */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px); /* Учитываем хедер */
+}
+
+.login-form {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 4px 10px var(--shadow-color);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-top: 0;
+  color: var(--text-color);
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.form-group input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+  font-size: 1em;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: var(--active-link-color);
+  outline: none;
+}
+
+.login-form button {
+  width: 100%;
+  background-color: var(--button-primary-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.2s ease;
+  margin-top: 10px;
+}
+
+.login-form button:hover {
+  background-color: var(--button-primary-hover-background);
+}
+
+.login-form .error-message {
+  color: var(--button-danger-background);
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* --- Dashboard Page --- */
+.dashboard-page {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.dashboard-page h1 {
+  font-size: 3em;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.dashboard-page p {
+  font-size: 1.2em;
+  color: var(--text-color);
+}
+
+
+/* --- Product List (HomePage) --- */
+.product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-  padding: 40px 0;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Чуть шире карточки */
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.product-card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Изменено: если изображения нет, то ничего не рендерится, и не будет пустого блока */
+.product-card img {
+  max-width: 100%;
+  height: 180px; /* Фиксированная высота для изображений */
+  object-fit: contain; /* Сохраняем пропорции, вписываем в контейнер */
+  margin-bottom: 15px;
+  display: block; /* Убедимся, что img ведет себя как блочный элемент */
+  margin-left: auto;
+  margin-right: auto;
+}
+.product-card img:not([src]) { /* Скрываем img, если у него нет src */
+  display: none;
+}
+
+
+.product-card h3 {
+  margin-top: 0;
+  color: var(--text-color);
+  font-size: 1.2em;
+  min-height: 40px; /* Чтобы карточки не прыгали при разной длине названия */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card .price {
+  color: var(--text-color);
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.product-card .quantity-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.product-card .quantity-controls button {
+  background-color: var(--button-primary-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.product-card .quantity-controls button:hover {
+  background-color: var(--button-primary-hover-background);
+}
+
+.product-card .quantity-controls span {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.product-card .add-to-cart-button {
+  background-color: var(--button-primary-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.product-card .add-to-cart-button:hover {
+  background-color: var(--button-primary-hover-background);
+}
+
+/* --- Cart Page --- */
+.cart-page h2 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Изменено: если изображения нет, то ничего не рендерится, и не будет пустого блока */
+.cart-item-details img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 5px;
+  background-color: #eee; /* Light background for product image */
+  display: block;
+}
+.dark-theme .cart-item-details img {
+  background-color: #555;
+}
+.cart-item-details img:not([src]) { /* Скрываем img, если у него нет src */
+  display: none;
+}
+
+
+.cart-item-info span {
+  font-weight: bold;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-item-actions button {
+  background-color: var(--button-primary-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.cart-item-actions button.remove-btn {
+  background-color: var(--button-danger-background);
+}
+.cart-item-actions button.remove-btn:hover {
+  background-color: var(--button-danger-hover-background);
+}
+.cart-item-actions button:hover {
+  background-color: var(--button-primary-hover-background);
+}
+
+.cart-item-actions span {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+
+.cart-summary {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-align: right;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.cart-summary h3 {
+  margin-top: 0;
+  color: var(--text-color);
+  font-size: 1.5em;
+}
+
+.clear-cart-btn {
+  background-color: var(--button-danger-background);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.clear-cart-btn:hover {
+  background-color: var(--button-danger-hover-background);
+}
+
+/* --- Not Found Page --- */
+.not-found {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.not-found h1 {
+  font-size: 3em;
+  color: var(--text-color);
+}
+
+.not-found p {
+  font-size: 1.2em;
+  color: var(--text-color);
+}
+
+.not-found a {
+  color: var(--active-link-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.not-found a:hover {
+  text-decoration: underline;
 }

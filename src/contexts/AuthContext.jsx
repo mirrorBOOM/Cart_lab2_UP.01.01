@@ -1,63 +1,51 @@
-import React, { createContext, useContext, useState } from 'react';
+// src/context/AuthContext.jsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+// Фейковый пользователь для демонстрации
+const FAKE_USER = {
+  email: 'test@example.com',
+  password: 'password123',
+  name: 'User', // Имя пользователя для приветствия
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [users, setUsers] = useState([
-    { id: 1, email: 'qwe@gmail.com', password: 'qwe', name: 'qwe' },
-  ]);
+  const [user, setUser] = useState(() => {
+    // Проверяем localStorage при инициализации
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  useEffect(() => {
+    // Сохраняем или удаляем пользователя в localStorage при изменении состояния
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
 
   const login = (email, password) => {
-    const foundUser = users.find(u => u.email === email && u.password === password);
-    if (foundUser) {
-      setUser(foundUser);
-      return { success: true, user: foundUser };
+    if (email === FAKE_USER.email && password === FAKE_USER.password) {
+      // В реальном приложении здесь будет запрос к API
+      setUser({ email: FAKE_USER.email, name: FAKE_USER.name });
+      return true;
     }
-    return { success: false, error: 'Неверный email или пароль' };
-  };
-
-  const register = (email, password, name) => {
-    const existingUser = users.find(u => u.email === email);
-    if (existingUser) {
-      return { success: false, error: 'Пользователь с таким email уже существует' };
-    }
-    
-    const newUser = {
-      id: users.length + 1,
-      email,
-      password,
-      name
-    };
-    
-    setUsers(prev => [...prev, newUser]);
-    setUser(newUser);
-    return { success: true, user: newUser };
+    return false;
   };
 
   const logout = () => {
     setUser(null);
   };
 
-  const value = {
-    user,
-    users,
-    login,
-    register,
-    logout
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };
