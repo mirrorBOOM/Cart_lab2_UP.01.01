@@ -5,9 +5,9 @@ const AuthContext = createContext();
 
 // Фейковый пользователь для демонстрации
 const FAKE_USER = {
-  email: 'test@example.com',
-  password: 'password123',
-  name: 'User', // Имя пользователя для приветствия
+  email: 'qwe@mail.ru',
+  password: 'qwe',
+  name: 'qwe', // Имя пользователя для приветствия
 };
 
 export const AuthProvider = ({ children }) => {

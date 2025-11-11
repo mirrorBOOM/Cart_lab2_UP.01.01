@@ -1,22 +1,14 @@
 // src/context/ThemeContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    // Получаем тему из localStorage или устанавливаем 'light' по умолчанию
-    return localStorage.getItem('theme') || 'light';
-  });
-
-  useEffect(() => {
-    // При изменении темы, обновляем класс на <body> и сохраняем в localStorage
-    document.body.className = theme + '-theme';
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  // Не использует localStorage
+  const [theme, setTheme] = useState('light');
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
   return (

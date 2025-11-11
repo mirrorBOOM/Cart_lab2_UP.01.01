@@ -1,72 +1,72 @@
-import React, { createContext, useReducer, useContext, useEffect } from 'react';
+// src/context/CartContext.jsx
+import React, { createContext, useReducer, useContext } from 'react'; // Убрали useEffect из импортов
 
 const CartContext = createContext();
 
 const cartReducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_ITEM':
-      const existingItem = state.find(item => item.id === action.payload.id);
-      if (existingItem) {
-        return state.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...state, { ...action.payload, quantity: 1 }];
-
-    case 'REMOVE_ITEM':
-      return state.filter(item => item.id !== action.payload.id);
-
-    case 'INCREMENT_QUANTITY':
+  if (action.type === 'add') {
+    const existingItem = state.find(item => item.id === action.payload.id);
+    if (existingItem) {
       return state.map(item =>
         item.id === action.payload.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-
-    case 'DECREMENT_QUANTITY':
-      return state.map(item =>
-        item.id === action.payload.id
-          ? { ...item, quantity: Math.max(0, item.quantity - 1) }
-          : item
-      ).filter(item => item.quantity > 0);
-
-    case 'CLEAR_CART':
-      return [];
-
-    default:
-      return state;
+    }
+    return [...state, { ...action.payload, quantity: 1 }];
+  } else if (action.type === 'remove') {
+    // Эта логика REMOVE_ITEM удаляет все экземпляры товара с данным id
+    return state.filter(item => item.id !== action.payload.id);
+  } else if (action.type === 'plus') {
+    return state.map(item =>
+      item.id === action.payload.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+  } else if (action.type === 'minus') {
+    return state.map(item =>
+      item.id === action.payload.id
+        ? { ...item, quantity: Math.max(0, item.quantity - 1) }
+        : item
+    ).filter(item => item.quantity > 0);
+  } else if (action.type === 'clear') {
+    return [];
+  } else {
+    return state;
   }
 };
 
-const initialCartState = JSON.parse(localStorage.getItem('cart')) || [];
+// Начальное состояние корзины теперь всегда пустой массив
+const initialCartState = []; // Убрали JSON.parse(localStorage.getItem('cart')) || []
 
 export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, initialCartState);
 
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+  // Удален useEffect, который сохранял корзину в localStorage
+  // useEffect(() => {
+  //   localStorage.setItem('cart', JSON.stringify(cart));
+  // }, [cart]);
 
   const addItem = (product) => {
-    dispatch({ type: 'ADD_ITEM', payload: product });
+    dispatch({ type: 'add', payload: product });
   };
 
+  // Важно: изменить removeItem, чтобы оно удаляло весь товар, если это требуется кнопкой "Удалить"
+  // Если кнопка "Удалить" в CartItem должна удалять все экземпляры товара
   const removeItem = (id) => {
-    dispatch({ type: 'REMOVE_ITEM', payload: { id } });
+    dispatch({ type: 'remove', payload: { id } }); // Вызываем REMOVE_ITEM для удаления всех экземпляров
   };
 
   const incrementQuantity = (id) => {
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: { id } });
+    dispatch({ type: 'plus', payload: { id } });
   };
 
   const decrementQuantity = (id) => {
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: { id } });
+    dispatch({ type: 'minus', payload: { id } });
   };
 
   const clearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+    dispatch({ type: 'clear' });
   };
 
   const getTotalPrice = () => {
