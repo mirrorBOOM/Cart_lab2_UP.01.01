@@ -1,4 +1,3 @@
-// src/pages/CartPage.jsx
 import React from 'react';
 import { useCart } from '../contexts/CartContext';
 
@@ -21,7 +20,7 @@ function CartPage() {
         {cart.map(item => (
           <li key={item.id} className="cart-item">
             <div className="cart-item-details">
-              {item.image && <img src={item.image} alt={item.name} />} {/* Рендерим img только если есть image */}
+              {item.image && <img src={item.image} alt={item.name} />} 
               <div className="cart-item-info">
                 <span>{item.name}</span> - {item.price} руб.
               </div>
@@ -31,7 +30,7 @@ function CartPage() {
               <span>{item.quantity}</span>
               <button onClick={() => incrementQuantity(item.id)}>+</button>
               <span>{item.price * item.quantity} руб.</span>
-              <button onClick={() => removeItem(item.id)} className="remove-btn">✖</button> {/* Иконка для удаления */}
+              <button onClick={() => removeItem(item.id)} className="remove-btn">Удалить</button> 
             </div>
           </li>
         ))}

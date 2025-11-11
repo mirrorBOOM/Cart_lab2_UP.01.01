@@ -1,8 +1,6 @@
-// src/pages/HomePage.jsx - Это страница Каталога товаров
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 
-// Твой массив товаров из App.jsx
 const products = [
   {
     id: 1,

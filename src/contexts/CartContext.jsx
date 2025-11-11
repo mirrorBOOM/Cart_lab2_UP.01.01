@@ -1,5 +1,4 @@
-// src/context/CartContext.jsx
-import React, { createContext, useReducer, useContext } from 'react'; // Убрали useEffect из импортов
+import React, { createContext, useReducer, useContext } from 'react'; 
 
 const CartContext = createContext();
 
@@ -15,7 +14,6 @@ const cartReducer = (state, action) => {
     }
     return [...state, { ...action.payload, quantity: 1 }];
   } else if (action.type === 'remove') {
-    // Эта логика REMOVE_ITEM удаляет все экземпляры товара с данным id
     return state.filter(item => item.id !== action.payload.id);
   } else if (action.type === 'plus') {
     return state.map(item =>
@@ -36,25 +34,15 @@ const cartReducer = (state, action) => {
   }
 };
 
-// Начальное состояние корзины теперь всегда пустой массив
-const initialCartState = []; // Убрали JSON.parse(localStorage.getItem('cart')) || []
+const initialCartState = []; 
 
 export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, initialCartState);
-
-  // Удален useEffect, который сохранял корзину в localStorage
-  // useEffect(() => {
-  //   localStorage.setItem('cart', JSON.stringify(cart));
-  // }, [cart]);
-
   const addItem = (product) => {
     dispatch({ type: 'add', payload: product });
   };
-
-  // Важно: изменить removeItem, чтобы оно удаляло весь товар, если это требуется кнопкой "Удалить"
-  // Если кнопка "Удалить" в CartItem должна удалять все экземпляры товара
   const removeItem = (id) => {
-    dispatch({ type: 'remove', payload: { id } }); // Вызываем REMOVE_ITEM для удаления всех экземпляров
+    dispatch({ type: 'remove', payload: { id } }); 
   };
 
   const incrementQuantity = (id) => {

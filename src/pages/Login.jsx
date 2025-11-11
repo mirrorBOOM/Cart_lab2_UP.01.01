@@ -1,4 +1,3 @@
-// src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -8,14 +7,14 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // Убрали 'user', так как не редиректим, если уже авторизован
+  const { login } = useAuth(); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(''); // Сбрасываем ошибку
+    setError('');
     const success = login(email, password);
     if (success) {
-      navigate('/dashboard', { replace: true }); // Перенаправляем на Dashboard после входа
+      navigate('/dashboard', { replace: true }); 
     } else {
       setError('Неверный Email или пароль.');
     }

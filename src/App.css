@@ -1,45 +1,39 @@
-/* App.css - Небольшие изменения */
-
-/* --- CSS-переменные для темы --- */
-/* Light Theme (твои светлые скрины) */
 :root {
-  --background-color: #f0f2f5; /* Светло-серый фон */
+  --background-color: #f0f2f5;
   --text-color: #333;
   --card-background: #fff;
-  --button-primary-background: #007bff; /* Синяя кнопка */
+  --button-primary-background: #007bff; 
   --button-primary-hover-background: #0056b3;
-  --button-danger-background: #dc3545; /* Красная кнопка */
+  --button-danger-background: #dc3545; 
   --button-danger-hover-background: #c82333;
   --button-text-color: #fff;
   --border-color: #ddd;
-  --header-background: #fff; /* Белый хедер */
+  --header-background: #fff; 
   --header-text-color: #333;
-  --active-link-color: #007bff; /* Активная ссылка синяя */
+  --active-link-color: #007bff;
   --input-background: #fff;
   --input-border: #ccc;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Theme (твои темные скрины) */
 .dark-theme {
-  --background-color: #262a34; /* Темно-синий фон */
+  --background-color: #262a34; 
   --text-color: #f1f1f1;
-  --card-background: #3a3f4e; /* Темные карточки */
-  --button-primary-background: #6a0dad; /* Фиолетовая кнопка */
+  --card-background: #3a3f4e; 
+  --button-primary-background: #6a0dad; 
   --button-primary-hover-background: #4a0873;
   --button-danger-background: #dc3545;
   --button-danger-hover-background: #c82333;
   --button-text-color: #fff;
   --border-color: #555;
-  --header-background: #3a3f4e; /* Темный хедер */
+  --header-background: #3a3f4e; 
   --header-text-color: #f1f1f1;
-  --active-link-color: #a042ff; /* Активная ссылка фиолетовая */
+  --active-link-color: #a042ff; 
   --input-background: #2c3038;
   --input-border: #555;
   --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
-/* --- Общие стили --- */
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -60,10 +54,10 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  flex-grow: 1; /* Для растягивания контента */
+  flex-grow: 1; 
 }
 
-/* --- Header & Navigation --- */
+/* --- Header --- */
 .header {
   background-color: var(--header-background);
   padding: 15px 20px;
@@ -146,7 +140,6 @@ body {
   color: var(--header-text-color);
 }
 
-/* --- Страницы --- */
 .page-title {
   text-align: center;
   margin-top: 40px;
@@ -155,12 +148,12 @@ body {
   color: var(--text-color);
 }
 
-/* --- Авторизация (Login Page) --- */
+/* --- Login --- */
 .login-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 100px); /* Учитываем хедер */
+  min-height: calc(100vh - 100px);
 }
 
 .login-form {
@@ -231,7 +224,7 @@ body {
   font-weight: bold;
 }
 
-/* --- Dashboard Page --- */
+/* --- Dashboard --- */
 .dashboard-page {
   text-align: center;
   padding: 50px 0;
@@ -249,10 +242,10 @@ body {
 }
 
 
-/* --- Product List (HomePage) --- */
+/* --- Catalog --- */
 .product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Чуть шире карточки */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
   gap: 20px;
   padding-top: 20px;
 }
@@ -267,17 +260,16 @@ body {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Изменено: если изображения нет, то ничего не рендерится, и не будет пустого блока */
 .product-card img {
   max-width: 100%;
-  height: 180px; /* Фиксированная высота для изображений */
-  object-fit: contain; /* Сохраняем пропорции, вписываем в контейнер */
+  height: 180px; 
+  object-fit: contain; 
   margin-bottom: 15px;
-  display: block; /* Убедимся, что img ведет себя как блочный элемент */
+  display: block; 
   margin-left: auto;
   margin-right: auto;
 }
-.product-card img:not([src]) { /* Скрываем img, если у него нет src */
+.product-card img:not([src]) { 
   display: none;
 }
 
@@ -286,7 +278,6 @@ body {
   margin-top: 0;
   color: var(--text-color);
   font-size: 1.2em;
-  min-height: 40px; /* Чтобы карточки не прыгали при разной длине названия */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,7 +330,7 @@ body {
   background-color: var(--button-primary-hover-background);
 }
 
-/* --- Cart Page --- */
+/* --- Cart --- */
 .cart-page h2 {
   color: var(--text-color);
   margin-bottom: 20px;
@@ -371,19 +362,18 @@ body {
   gap: 15px;
 }
 
-/* Изменено: если изображения нет, то ничего не рендерится, и не будет пустого блока */
 .cart-item-details img {
   width: 70px;
   height: 70px;
   object-fit: contain;
   border-radius: 5px;
-  background-color: #eee; /* Light background for product image */
+  background-color: #eee; 
   display: block;
 }
 .dark-theme .cart-item-details img {
   background-color: #555;
 }
-.cart-item-details img:not([src]) { /* Скрываем img, если у него нет src */
+.cart-item-details img:not([src]) { 
   display: none;
 }
 
@@ -455,28 +445,3 @@ body {
   background-color: var(--button-danger-hover-background);
 }
 
-/* --- Not Found Page --- */
-.not-found {
-  text-align: center;
-  padding: 50px 0;
-}
-
-.not-found h1 {
-  font-size: 3em;
-  color: var(--text-color);
-}
-
-.not-found p {
-  font-size: 1.2em;
-  color: var(--text-color);
-}
-
-.not-found a {
-  color: var(--active-link-color);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.not-found a:hover {
-  text-decoration: underline;
-}
